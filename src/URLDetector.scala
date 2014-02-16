@@ -1,16 +1,18 @@
 /**
  * Created by kenichi on 14/02/16.
  */
+
+import scala.collection.mutable.ListBuffer
+
 class URLDetector(it:Iterator[String]) {
   val URL = """((?i)<a href=")(.*)(http://)([^>]*)">""".r
 
   def findFirstOne():String = {
-    val func = (x:String) => {
-      val matched = URL.findFirstIn(x)
-      if( matched != None) List(matched.get)
-      else List()
+    val URLList = ListBuffer[String]()
+    for(line <- it; matched <- URL.findFirstMatchIn(line)){
+      val str = matched.group(3)+matched.group(4)
+      URLList.append(str)
     }
-    val URLList = it.flatMap(func)
-    URLList.next()
+    URLList(0)
   }
 }

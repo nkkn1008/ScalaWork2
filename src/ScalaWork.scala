@@ -12,7 +12,6 @@ object ScalaWork {
     val urlDetector = new URLDetector(lines)
 
     println(urlDetector.findFirstOne())
-
     source.close()
   }
 }
