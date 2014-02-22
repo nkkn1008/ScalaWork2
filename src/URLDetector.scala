@@ -9,10 +9,16 @@ class URLDetector(it:Iterator[String]) {
 
   def findFirstOne():String = {
     val URLList = ListBuffer[String]()
-    for(line <- it; matched <- URL.findFirstMatchIn(line)){
-      val str = matched.group(3)+matched.group(4)
-      URLList.append(str)
+    for(line <- it){
+      URL.findFirstMatchIn(line) match {
+        case Some(m) => {
+          val str = m.group(3)+m.group(4)
+          URLList.append(str)
+        }
+        case None => ;
+      }
     }
     URLList(0)
   }
 }
+
